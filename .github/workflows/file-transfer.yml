@@ -59,7 +59,8 @@ jobs:
         t=myOpenWrt_$(date +%Y%m%d%H%M%S).tar.gz
         echo "FILE_NAME=$t" >> $GITHUB_ENV
         tar -zcvf $t *
-        echo "::set-output name=status::success"
+        #echo "::set-output name=status::success"
+        echo status=success >> $GITHUB_OUTPUT
         
     - name: Upload firmware to WeTransfer
       id: wetransfer
@@ -68,6 +69,5 @@ jobs:
         cd openwrt
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
-
+        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"      
+        echo url=$(cat wetransfer.log | grep https | cut -f3 -d" ") >> $GITHUB_OUTPUT
