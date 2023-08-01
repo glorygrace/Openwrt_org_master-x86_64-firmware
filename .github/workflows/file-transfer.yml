@@ -20,8 +20,10 @@ env:
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: true
-  UPLOAD_RELEASE: true
+  UPLOAD_WETRANSFER: false
+  UPLOAD_GOFILE: true
+  UPLOAD_WENSHUSHU: false
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -73,18 +75,24 @@ jobs:
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"      
         echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
-    - name: Generate release tag
-      id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    - name: Upload firmware to GoFile
+      id: Gofile
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_GOFILE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
-        echo "::set-output name=status::success"
-
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        files: ${{ env.FILE_NAME }}/*
+        cd openwrt
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer gof -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee gofile.log
+        echo "::warning file=gofile.io::$(cat gofile.log | grep https)"      
+        echo "url=$(cat gofile.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+        
+    - name: Upload firmware to WenShuShu
+      id: WenShuShu
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WENSHUSHU == 'true' && !cancelled()
+      run: |
+        cd openwrt
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer wss -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wenshushu.log
+        echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)"      
+        echo "url=$(cat wenshushu.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+        
+    
