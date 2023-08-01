@@ -93,6 +93,6 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer wss -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wenshushu.log
         echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)"      
-        echo "url=$(cat wenshushu.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+        echo "url=$(cat wenshushu.log | grep https | cut -f3 -d' ')" >> $GITHUB_OUTPUT
         
     
