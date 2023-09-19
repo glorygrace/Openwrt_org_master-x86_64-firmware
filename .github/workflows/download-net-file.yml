@@ -60,7 +60,7 @@ jobs:
       run: |
         cd openwrt
         # curl -fsSL https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
-        curl -fsSL https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.7/npp.8.5.7.portable.x64.zip
+        curl -OfsSL https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.7/npp.8.5.7.portable.x64.zip
         # echo "::set-output name=status::success"
         echo "status=success" >> $GITHUB_OUTPUT
 
