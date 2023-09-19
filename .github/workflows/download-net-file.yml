@@ -94,7 +94,7 @@ jobs:
     - name: Upload firmware to WenShuShu
       id: WenShuShu
       # if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-      working-directory: /workdir
+      # working-directory: /workdir
       run: |
         # cd /workdir
         curl -fsSL git.io/file-transfer | sh
