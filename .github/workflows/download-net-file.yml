@@ -11,7 +11,7 @@ on:
         default: 'false'
 
 env:
-  File_URL: https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.7/npp.8.5.7.portable.x64.zip
+  File_URL: https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_GOFILE: false
