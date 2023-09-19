@@ -61,6 +61,7 @@ jobs:
     - name: Organize files
       id: organize
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      working-directory: /workdir
       run: |
         # cd /workdir
         t=file_$(date +%Y%m%d%H%M%S).tar.gz
@@ -92,6 +93,7 @@ jobs:
     - name: Upload firmware to WenShuShu
       id: WenShuShu
       # if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      working-directory: /workdir
       run: |
         # cd /workdir
         curl -fsSL git.io/file-transfer | sh
