@@ -40,7 +40,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
        
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
@@ -50,9 +50,11 @@ jobs:
         
     - name: Download files
       id: download
+      working-directory: /workdir
       run: |
         cd /workdir
-        curl -fsSL https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
+        # curl -fsSL https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
+        curl -fsSL https://raw.githubusercontent.com/P3TERX/openwrt-list/master/depends-ubuntu-2004
         # echo "::set-output name=status::success"
         echo "status=success" >> $GITHUB_OUTPUT
 
