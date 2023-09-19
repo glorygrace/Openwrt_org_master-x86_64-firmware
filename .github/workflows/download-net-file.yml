@@ -62,7 +62,7 @@ jobs:
       id: organize
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd /workdir
+        # cd /workdir
         t=file_$(date +%Y%m%d%H%M%S).tar.gz
         echo "FILE_NAME=$t" >> $GITHUB_ENV
         tar -zcvf $t *
@@ -73,7 +73,7 @@ jobs:
       id: wetransfer
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
-        cd /workdir
+        # cd /workdir
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"      
@@ -83,7 +83,7 @@ jobs:
       id: Gofile
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_GOFILE == 'true' && !cancelled()
       run: |
-        cd /workdir
+        # cd /workdir
         curl -fsSL git.io/file-transfer | sh
         ./transfer gof -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee gofile.log
         echo "::warning file=gofile.io::$(cat gofile.log | grep https)"      
@@ -93,7 +93,7 @@ jobs:
       id: WenShuShu
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
-        cd /workdir
+        # cd /workdir
         curl -fsSL git.io/file-transfer | sh
         ./transfer wss -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wenshushu.log
         echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)" 
