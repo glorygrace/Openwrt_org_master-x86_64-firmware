@@ -47,6 +47,25 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
+        
+    - name: Download files
+      id: download
+      run: |
+        cd /workdir
+        curl -fsSL https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
+        # echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: Organize files
+      id: organize
+      if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd /workdir
+        t=file_$(date +%Y%m%d%H%M%S).tar.gz
+        echo "FILE_NAME=$t" >> $GITHUB_ENV
+        tar -zcvf $t *
+        # echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
                
     - name: Upload firmware to WeTransfer
       id: wetransfer
@@ -70,11 +89,11 @@ jobs:
         
     - name: Upload firmware to WenShuShu
       id: WenShuShu
-      if: env.UPLOAD_WENSHUSHU == 'true'
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
         cd /workdir
         curl -fsSL git.io/file-transfer | sh
-        ./transfer wss -s -p 16 --no-progress 'https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip' | tee wenshushu.log
+        ./transfer wss -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wenshushu.log
         echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)" 
         message=$(cat wenshushu.log | grep https | cut -f3 -d' ')
         echo "$message" >> $GITHUB_OUTPUT
