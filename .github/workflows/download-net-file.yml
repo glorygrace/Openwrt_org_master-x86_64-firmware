@@ -47,13 +47,18 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
+
+    - name: Clone source code
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
     - name: Download files
       id: download
-      working-directory: /workdir
       run: |
-        ln -sf /workdir $GITHUB_WORKSPACE
-        # cd /workdir
+        cd openwrt
         # curl -fsSL https://archive.org/download/firmware-16.1.0_202309/Firmware%2016.1.0.zip
         curl -fsSL https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.7/npp.8.5.7.portable.x64.zip
         # echo "::set-output name=status::success"
@@ -62,9 +67,8 @@ jobs:
     - name: Organize files
       id: organize
       if: steps.download.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      working-directory: /workdir
       run: |
-        # cd /workdir
+        cd openwrt
         t=file_$(date +%Y%m%d%H%M%S).tar.gz
         echo "FILE_NAME=$t" >> $GITHUB_ENV
         tar -zcvf $t *
@@ -96,7 +100,7 @@ jobs:
       # if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       # working-directory: /workdir
       run: |
-        # cd /workdir
+        cd openwrt
         curl -fsSL git.io/file-transfer | sh
         ./transfer wss -s -p 16 --no-progress ${{ env.FILE_NAME }} | tee wenshushu.log
         echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)" 
