@@ -1,5 +1,5 @@
 
-name: File-transfer Test
+name: download-net-file
 
 on:
   repository_dispatch:
