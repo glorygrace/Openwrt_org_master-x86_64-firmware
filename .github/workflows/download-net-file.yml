@@ -11,7 +11,7 @@ on:
         default: 'false'
 
 env:
-  File_URL: https://objects.githubusercontent.com/github-production-release-asset-2e65be/115992009/58291888-9ce8-4659-a653-a8943a2c8644?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231221%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231221T032642Z&X-Amz-Expires=300&X-Amz-Signature=c65b7d76001e18da2a92de4eecf6403e1956c98a194be776e2d8951f7eef3f56&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=115992009&response-content-disposition=attachment%3B%20filename%3Dhaos_ova-11.2.vmdk.zip&response-content-type=application%2Foctet-stream
+  File_URL: https://github.com/home-assistant/operating-system/releases/download/11.2/haos_ova-11.2.vmdk.zip
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_GOFILE: false
