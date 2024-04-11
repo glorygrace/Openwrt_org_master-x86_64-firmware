@@ -11,7 +11,7 @@ on:
         default: 'false'
 
 env:
-  File_URL: https://github.com/fbelavenuto/arpl/releases/download/v1.1-beta2a/arpl-1.1-beta2a.img.zip
+  File_URL: https://github.com/glorygrace/OpenWrt-Build-System/actions/runs/8629861472/artifacts/1401563583
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_GOFILE: false
