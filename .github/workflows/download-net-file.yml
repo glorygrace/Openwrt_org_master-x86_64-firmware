@@ -11,7 +11,7 @@ on:
         default: 'false'
 
 env:
-  File_URL: https://productionresultssa6.blob.core.windows.net/actions-results/603ce1a5-2d6f-456b-9a65-9fad6b67b214/workflow-job-run-ca395085-040a-526b-2ce8-bdc85f692774/artifacts/46bdaf3ac8f87ae920edc501943b44cccf05b3d9930b9b2102a2e6c7f3d5ad83.zip?rscd=attachment%3B+filename%3D%22istoreos-firmware-x86_64-2024.04.10.zip%22&se=2024-04-11T01%3A29%3A15Z&sig=4qgMQj1Xy6USxxEosxC54%2BKzrqdbJq4y0fJ1VvtyrAU%3D&sp=r&spr=https&sr=b&st=2024-04-11T01%3A19%3A10Z&sv=2021-12-02
+  File_URL: https://github.com/magiskmodule/magisk-delta/blob/main/Magisk-Delta-V27.0.apk
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_GOFILE: false
