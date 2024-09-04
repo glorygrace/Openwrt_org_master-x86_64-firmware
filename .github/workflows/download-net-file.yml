@@ -11,7 +11,7 @@ on:
         default: 'false'
 
 env:
-  File_URL: https://github.com/capntrips/KernelFlasher/releases/download/v1.0.0-alpha20/KernelFlasher-v1.0.0-alpha20.apk
+  File_URL: https://download.nikonimglib.com/archive6/evcmg00Ascn5066nKmX51a5T7D46/S-CCPRO_-023701WF-ALLIN-ALL___.exe
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_GOFILE: false
